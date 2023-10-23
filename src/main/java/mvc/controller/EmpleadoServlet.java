@@ -68,7 +68,7 @@ public class EmpleadoServlet extends HttpServlet {
 		String opcion = request.getParameter("opcion");
 
 	    if (opcion.equals("buscarEmpPorDni")) {
-	    	System.out.println("Usted a presionado la opcion buscar por DNI POST");
+	    	System.out.println("Usted a presionado la opcion buscar por DNI_POST");
 	        String dni = request.getParameter("dni");
 	        
 	        EmpleadoDAO empleadoDAO = new EmpleadoDAO();
