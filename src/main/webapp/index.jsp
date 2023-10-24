@@ -15,8 +15,10 @@
 			<a href="empleados?opcion=listar">Ver Empleados</a>
 		</p>
 		<p>
-			<a href="empleados?opcion=buscarEmpPorDni">Buscar Empleado por
-				Dni</a>
+			<a href="empleados?opcion=buscarEmpPorDni">Buscar Empleado por Dni</a>
+		</p>
+		<p>
+			<a href="empleados?opcion=buscarEmp">Buscar Empleado</a>
 		</p>
 	</div>
 </body>

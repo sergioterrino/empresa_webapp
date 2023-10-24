@@ -95,6 +95,148 @@ public class EmpleadoDAO {
 	}
 	
 	
+	 //METODOS BUSCAR: CHOICE--------------------------------------------------------------------------------------------------------------------------------
+	public List<Empleado> buscarChoiceDni(String dni) throws SQLException {
+		ResultSet rs = null;
+		List<Empleado> listaEmpleados = new ArrayList<>();
+		String sql = null;
+		conn = obtenerConexion();
+
+		try {
+			PreparedStatement st = conn.prepareStatement("SELECT * FROM EMPLEADOS WHERE DNI = ?");
+			st.setString(1, dni);
+			rs = st.executeQuery();
+
+			while (rs.next()) {
+				Empleado empleado = new Empleado();
+				empleado.setId(rs.getInt("id"));
+				empleado.setDni(rs.getString("dni"));
+				empleado.setNombre(rs.getString("nombre"));
+				empleado.setSexo(rs.getString("sexo"));
+				empleado.setCategoria(rs.getInt("categoria"));
+				empleado.setAnyos(rs.getInt("anyos"));
+				listaEmpleados.add(empleado);
+			}
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error, no se ha podido obtener la lista Empleados con CHOICE DNI ");
+		}
+		return listaEmpleados;
+	}
+	
+	public List<Empleado> buscarChoiceNombre(String nombre) throws SQLException {
+		ResultSet rs = null;
+		List<Empleado> listaEmpleados = new ArrayList<>();
+		conn = obtenerConexion();
+
+		try {
+			PreparedStatement st = conn.prepareStatement("SELECT * FROM EMPLEADOS WHERE nombre = ?");
+			st.setString(1, nombre);
+			rs = st.executeQuery();
+
+			while (rs.next()) {
+				Empleado empleado = new Empleado();
+				empleado.setId(rs.getInt("id"));
+				empleado.setDni(rs.getString("dni"));
+				empleado.setNombre(rs.getString("nombre"));
+				empleado.setSexo(rs.getString("sexo"));
+				empleado.setCategoria(rs.getInt("categoria"));
+				empleado.setAnyos(rs.getInt("anyos"));
+				listaEmpleados.add(empleado);
+			}
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error, no se ha podido obtener la lista Empleados con CHOICE NOMBRE ");
+		}
+		return listaEmpleados;
+	}
+
+	public List<Empleado> buscarChoiceSexo(String sexo) throws SQLException {
+		ResultSet rs = null;
+		List<Empleado> listaEmpleados = new ArrayList<>();
+		conn = obtenerConexion();
+
+		try {
+			PreparedStatement st = conn.prepareStatement("SELECT * FROM EMPLEADOS WHERE sexo = ?");
+			st.setString(1, sexo);
+			rs = st.executeQuery();
+
+			while (rs.next()) {
+				Empleado empleado = new Empleado();
+				empleado.setId(rs.getInt("id"));
+				empleado.setDni(rs.getString("dni"));
+				empleado.setNombre(rs.getString("nombre"));
+				empleado.setSexo(rs.getString("sexo"));
+				empleado.setCategoria(rs.getInt("categoria"));
+				empleado.setAnyos(rs.getInt("anyos"));
+				listaEmpleados.add(empleado);
+			}
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error, no se ha podido obtener la lista Empleados con CHOICE SEXO ");
+		}
+		return listaEmpleados;
+	}
+	
+	public List<Empleado> buscarChoiceCategoria(String categoria) throws SQLException {
+		ResultSet rs = null;
+		List<Empleado> listaEmpleados = new ArrayList<>();
+		conn = obtenerConexion();
+
+		try {
+			PreparedStatement st = conn.prepareStatement("SELECT * FROM EMPLEADOS WHERE categoria = ?");
+			st.setString(1, categoria);
+			rs = st.executeQuery();
+
+			while (rs.next()) {
+				Empleado empleado = new Empleado();
+				empleado.setId(rs.getInt("id"));
+				empleado.setDni(rs.getString("dni"));
+				empleado.setNombre(rs.getString("nombre"));
+				empleado.setSexo(rs.getString("sexo"));
+				empleado.setCategoria(rs.getInt("categoria"));
+				empleado.setAnyos(rs.getInt("anyos"));
+				listaEmpleados.add(empleado);
+			}
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error, no se ha podido obtener la lista Empleados con CHOICE CATEGORIA ");
+		}
+		return listaEmpleados;
+	}
+	
+	
+	public List<Empleado> buscarChoiceAnyos(String anyos) throws SQLException {
+		ResultSet rs = null;
+		List<Empleado> listaEmpleados = new ArrayList<>();
+		conn = obtenerConexion();
+
+		try {
+			PreparedStatement st = conn.prepareStatement("SELECT * FROM EMPLEADOS WHERE anyos = ?");
+			st.setString(1, anyos);
+			rs = st.executeQuery();
+
+			while (rs.next()) {
+				Empleado empleado = new Empleado();
+				empleado.setId(rs.getInt("id"));
+				empleado.setDni(rs.getString("dni"));
+				empleado.setNombre(rs.getString("nombre"));
+				empleado.setSexo(rs.getString("sexo"));
+				empleado.setCategoria(rs.getInt("categoria"));
+				empleado.setAnyos(rs.getInt("anyos"));
+				listaEmpleados.add(empleado);
+			}
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error, no se ha podido obtener la lista Empleados con CHOICE ANYOS ");
+		}
+		return listaEmpleados;
+	}
 	
 	
 	
@@ -103,6 +245,9 @@ public class EmpleadoDAO {
 	
 	
 	
+	
+	
+	//FIN METODOS BUSCAR: CHOICE------------------------------------------------------------------------------------------------------------------------------------
 	
 	
 	

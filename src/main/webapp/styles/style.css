@@ -29,3 +29,33 @@ a {
 	color: rgb(0, 128, 255);
 	text-decoration: none;
 }
+
+/* Estilos para la tabla */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+/*encabezado */
+table th {
+  background-color: #333;
+  color: #fff;
+  text-align: left;
+  padding: 10px;
+}
+
+/*celdas de datos */
+table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+/* ilas alternas (efecto de zebra) */
+table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#divBuscarEmp{
+	margin: 2%;
+}

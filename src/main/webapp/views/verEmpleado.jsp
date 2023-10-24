@@ -5,12 +5,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Listado de Empleados</title>
+<title>Ver Empleado</title>
 <link rel="stylesheet" type="text/css" href="styles/style.css">
 </head>
 <body>
-	<div class="container">
-		<h1>Listado de Empleados</h1>
+<div class="container">
+		<h1>
+			Lista de Empleados
+		</h1>
 		<table border="1">
 			<tr>
 				<th>DNI</th>
@@ -33,6 +35,7 @@
 				</tr>
 			</c:forEach>
 		</table>
-	</div>
+</div>
+
 </body>
 </html>

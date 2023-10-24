@@ -2,6 +2,7 @@ package mvc.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -21,23 +22,25 @@ import mvc.model.entity.Nomina;
 @WebServlet(description = "Administra peticiones para la tabla empleados", urlPatterns = { "/empleados" })
 public class EmpleadoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public EmpleadoServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public EmpleadoServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String opcion = request.getParameter("opcion");
 
 		if (opcion.equals("listar")) {
-			System.out.println("Usted a presionado la opcion listar");
+			System.out.println("Usted a presionado la opcion Listar");
 			EmpleadoDAO empleadoDAO = new EmpleadoDAO();
 			try {
 				List<Empleado> lista = empleadoDAO.obtenerEmpleados();
@@ -49,15 +52,21 @@ public class EmpleadoServlet extends HttpServlet {
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/listar.jsp");
 			requestDispatcher.forward(request, response);
 		}
-		//cuando clique en esta opción sólo me llevará a su JSP
-		if(opcion.equals("buscarEmpPorDni")) {
-			System.out.println("Usted a presionado la opcion buscar por DNI");
-			
+		// cuando clique en esta opción sólo me llevará a su JSP
+		if (opcion.equals("buscarEmpPorDni")) {
+			System.out.println("Usted a presionado la opcion Buscar por DNI");
+
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/buscarEmpPorDni.jsp");
 			requestDispatcher.forward(request, response);
 		}
-		
-		
+
+		if (opcion.equals("buscarEmp")) {
+			System.out.println("Usted a presionado la opcion de Buscar Empleado");
+
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/buscarEmp.jsp");
+			requestDispatcher.forward(request, response);
+		}
+
 	}
 
 	/**
@@ -98,6 +107,45 @@ public class EmpleadoServlet extends HttpServlet {
 	            e.printStackTrace();
 	        }
 	    }
-	}
+	    if (opcion.equals("buscarEmp")) {
+	    	System.out.println("Usted a presionado la opcion buscar por Buscar Empleado_POST");
+	        String choice = request.getParameter("choice");
+	        String busqueda = request.getParameter("busqueda");
+	        
+	        EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+	        Nomina n = new Nomina();
+	        
+	        try {
+	            if (choice != null) {
+	                if(choice.equals("DNI")) {
+	                	List<Empleado> lista = empleadoDAO.buscarChoiceDni(busqueda);
+	    				request.setAttribute("lista", lista);
+	                }else if(choice.equals("Nombre")) {
+	                	List<Empleado> lista = empleadoDAO.buscarChoiceNombre(busqueda);
+	    				request.setAttribute("lista", lista);
+	                }else if(choice.equals("Sexo")) {
+	                	List<Empleado> lista = empleadoDAO.buscarChoiceSexo(busqueda);
+	    				request.setAttribute("lista", lista);
+	                }else if(choice.equals("Categoria")) {
+	                	List<Empleado> lista = empleadoDAO.buscarChoiceCategoria(busqueda);
+	    				request.setAttribute("lista", lista);
+	                }else if(choice.equals("Anyos")) {
+	                	List<Empleado> lista = empleadoDAO.buscarChoiceAnyos(busqueda);
+	    				request.setAttribute("lista", lista);
+	                }
+	                
+                    // Redirigir a verEmpleado.jsp
+                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/verEmpleado.jsp");
+                    requestDispatcher.forward(request, response);
+                    
+	            }else {
+	                System.out.println("Error, seleccione una opción.");
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+}
 
 }
