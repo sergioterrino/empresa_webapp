@@ -10,16 +10,16 @@
 <body>
 	<div class="container">
 		<h1>Gestor de Empleados</h1>
-		<h2>Menú</h2>
-		<p>
-			<a href="empleados?opcion=listar">Ver Empleados</a>
-		</p>
-		<p>
-			<a href="empleados?opcion=buscarEmpPorDni">Buscar Empleado por Dni</a>
-		</p>
-		<p>
-			<a href="empleados?opcion=buscarEmp">Buscar Empleado</a>
-		</p>
+		<table class="menu" style="text-align:center;">
+            <tr>
+                <th colspan="3" style="text-align:center;">Menú</th>
+            </tr>
+            <tr>
+                <td><a href="empleados?opcion=listar" class="button">Ver Empleados</a></td>
+                <td><a href="empleados?opcion=buscarEmpPorDni" class="button">Buscar Empleado por Dni</a></td>
+                <td><a href="empleados?opcion=buscarEmp" class="button">Buscar Empleado</a></td>
+            </tr>
+        </table>
 	</div>
 </body>
 </html>

@@ -1,5 +1,8 @@
 package mvc.model.entity;
 
+/**
+ * Represents an Employee entity with attributes such as ID, DNI, name, gender, category, and years of service.
+ */
 public class Empleado {
 
     private int id;
@@ -9,6 +12,17 @@ public class Empleado {
     private int categoria;
     private int anyos;
 
+    /**
+     * Constructs an Employee object with the specified attributes.
+     *
+     * @param id The unique identifier for the employee.
+     * @param dni The DNI (National Identity Document) of the employee.
+     * @param nombre The name of the employee.
+     * @param sexo The gender of the employee.
+     * @param categoria The category of the employee (must be between 1 and 10).
+     * @param anyos The number of years the employee has served (must be positive).
+     * @throws Exception If the category is not between 1 and 10, or if the years of service are not positive.
+     */
     public Empleado(int id, String dni, String nombre, String sexo, int categoria, int anyos) throws Exception {
         super();
         this.id = id;

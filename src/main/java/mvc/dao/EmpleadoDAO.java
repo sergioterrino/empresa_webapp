@@ -10,13 +10,22 @@ import java.util.List;
 import mvc.model.entity.Empleado;
 import mvc.model.repository.Conexion;
 
+/**
+ * This class represents a Data Access Object (DAO) for handling employee data.
+ * It provides methods to retrieve, search, and manipulate employee information in the database.
+ */
 public class EmpleadoDAO {
 	private Connection conn;
 	private PreparedStatement st;
 	private boolean estadoOperacion;
-
+	//el DAO es el que tiene los metodos que acceden a la BD. El Servlet creo que es el que conecta el cliente con la BD
 	
-	// obtener lista de empleados
+	/**
+     * Retrieves a list of all employees from the database.
+     *
+     * @return A list of Employee objects.
+     * @throws SQLException If there is an error with the database.
+     */
 	public List<Empleado> obtenerEmpleados() throws SQLException {
 		ResultSet rs = null;
 		List<Empleado> listaEmpleados = new ArrayList<>();
@@ -37,7 +46,6 @@ public class EmpleadoDAO {
 				empleado.setAnyos(rs.getInt("anyos"));
 				listaEmpleados.add(empleado);
 			}
-			System.out.println("lista empleados: " + listaEmpleados);
 			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -46,7 +54,13 @@ public class EmpleadoDAO {
 		return listaEmpleados;
 	}
 	
-
+	/**
+     * Retrieves an employee's information by their DNI (Identification Number).
+     *
+     * @param dni The DNI of the employee to retrieve.
+     * @return An Employee object with the employee's information.
+     * @throws Exception If there is an error with the database or no employee is found with the given DNI.
+     */
 	public Empleado obtenerEmpleadoPorDni(String dni) throws Exception {
 		ResultSet rs = null;
 		Empleado empleado = new Empleado();
@@ -74,7 +88,13 @@ public class EmpleadoDAO {
 		return empleado;
 	}
 	
-
+	/**
+	 * Retrieves the salary of an employee with the given DNI (Identification Number).
+	 *
+	 * @param dni The DNI of the employee for whom you want to obtain the salary.
+	 * @return The salary of the employee.
+	 * @throws SQLException If there is an error with the database or no salary is found for the given DNI.
+	 */
 	public double obtenerSalario(String dni) throws SQLException {
 		ResultSet rs = null;
 		conn = obtenerConexion();
@@ -96,6 +116,14 @@ public class EmpleadoDAO {
 	
 	
 	 //METODOS BUSCAR: CHOICE--------------------------------------------------------------------------------------------------------------------------------
+	
+	/**
+	 * Retrieves a list of employees based on their DNI (Identification Number) matching a given value.
+	 *
+	 * @param dni The DNI value to search for in the employees' records.
+	 * @return A list of Employee objects matching the DNI value.
+	 * @throws SQLException If there is an error with the database.
+	 */
 	public List<Empleado> buscarChoiceDni(String dni) throws SQLException {
 		ResultSet rs = null;
 		List<Empleado> listaEmpleados = new ArrayList<>();
@@ -125,6 +153,13 @@ public class EmpleadoDAO {
 		return listaEmpleados;
 	}
 	
+	/**
+	 * Retrieves a list of employees based on their name matching a given value.
+	 *
+	 * @param nombre The name value to search for in the employees' records.
+	 * @return A list of Employee objects matching the name value.
+	 * @throws SQLException If there is an error with the database.
+	 */
 	public List<Empleado> buscarChoiceNombre(String nombre) throws SQLException {
 		ResultSet rs = null;
 		List<Empleado> listaEmpleados = new ArrayList<>();
@@ -153,6 +188,13 @@ public class EmpleadoDAO {
 		return listaEmpleados;
 	}
 
+	/**
+	 * Retrieves a list of employees based on their gender (sexo) matching a given value.
+	 *
+	 * @param sexo The gender value to search for in the employees' records.
+	 * @return A list of Employee objects matching the gender value.
+	 * @throws SQLException If there is an error with the database.
+	 */
 	public List<Empleado> buscarChoiceSexo(String sexo) throws SQLException {
 		ResultSet rs = null;
 		List<Empleado> listaEmpleados = new ArrayList<>();
@@ -181,6 +223,13 @@ public class EmpleadoDAO {
 		return listaEmpleados;
 	}
 	
+	/**
+	 * Retrieves a list of employees based on their category (categoria) matching a given value.
+	 *
+	 * @param categoria The category value to search for in the employees' records.
+	 * @return A list of Employee objects matching the category value.
+	 * @throws SQLException If there is an error with the database.
+	 */
 	public List<Empleado> buscarChoiceCategoria(String categoria) throws SQLException {
 		ResultSet rs = null;
 		List<Empleado> listaEmpleados = new ArrayList<>();
@@ -209,7 +258,13 @@ public class EmpleadoDAO {
 		return listaEmpleados;
 	}
 	
-	
+	/**
+	 * Retrieves a list of employees based on the number of years (anyos) matching a given value.
+	 *
+	 * @param anyos The number of years value to search for in the employees' records.
+	 * @return A list of Employee objects matching the number of years value.
+	 * @throws SQLException If there is an error with the database.
+	 */
 	public List<Empleado> buscarChoiceAnyos(String anyos) throws SQLException {
 		ResultSet rs = null;
 		List<Empleado> listaEmpleados = new ArrayList<>();
@@ -238,137 +293,14 @@ public class EmpleadoDAO {
 		return listaEmpleados;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	//FIN METODOS BUSCAR: CHOICE------------------------------------------------------------------------------------------------------------------------------------
-	
-	
-	
-	
 
-	// guardar empleado
-	public boolean guardar(Empleado empleado) throws SQLException {
-		String sql = null;
-		estadoOperacion = false;
-		conn = obtenerConexion();
-
-		try {
-			conn.setAutoCommit(false);
-			sql = "INSERT INTO Empleados (dni, nombre, sexo, categoria, anyos) VALUES(?,?,?,?,?)";
-			st = conn.prepareStatement(sql);
-
-			st.setString(1, empleado.getDni());
-			st.setString(2, empleado.getNombre());
-			st.setString(3, empleado.getSexo());
-			st.setInt(4, empleado.getCategoria());
-			st.setInt(5, empleado.getAnyos());
-
-			estadoOperacion = st.executeUpdate() > 0;
-
-			conn.commit();
-			st.close();
-			conn.close();
-		} catch (SQLException e) {
-			conn.rollback();
-			e.printStackTrace();
-		}
-
-		return estadoOperacion;
-	}
-
-	// editar empleado
-	public boolean editar(Empleado empleado) throws SQLException {
-		String sql = null;
-		estadoOperacion = false;
-		conn = obtenerConexion();
-		try {
-			conn.setAutoCommit(false);
-			sql = "UPDATE Empleados SET dni=?, nombre=?, sexo=?, categoria=?, anyos=? WHERE id=?";
-			st = conn.prepareStatement(sql);
-
-			st.setString(1, empleado.getDni());
-			st.setString(2, empleado.getNombre());
-			st.setString(3, empleado.getSexo());
-			st.setInt(4, empleado.getCategoria());
-			st.setInt(5, empleado.getAnyos());
-			// Deberías tener un método para obtener el ID de empleado o pasarlo como
-			// argumento.
-
-			estadoOperacion = st.executeUpdate() > 0;
-			conn.commit();
-			st.close();
-			conn.close();
-		} catch (SQLException e) {
-			conn.rollback();
-			e.printStackTrace();
-		}
-
-		return estadoOperacion;
-	}
-
-	// eliminar empleado
-	public boolean eliminar(int idEmpleado) throws SQLException {
-		String sql = null;
-		estadoOperacion = false;
-		conn = obtenerConexion();
-		try {
-			conn.setAutoCommit(false);
-			sql = "DELETE FROM Empleados WHERE id=?";
-			st = conn.prepareStatement(sql);
-			st.setInt(1, idEmpleado);
-
-			estadoOperacion = st.executeUpdate() > 0;
-			conn.commit();
-			st.close();
-			conn.close();
-
-		} catch (SQLException e) {
-			conn.rollback();
-			e.printStackTrace();
-		}
-
-		return estadoOperacion;
-	}
-
-	// obtener empleado
-	public Empleado obtenerEmpleado(int idEmpleado) throws SQLException {
-		ResultSet resultSet = null;
-		Empleado empleado = new Empleado();
-
-		String sql = null;
-		estadoOperacion = false;
-		conn = obtenerConexion();
-
-		try {
-			sql = "SELECT * FROM Empleados WHERE id =?";
-			st = conn.prepareStatement(sql);
-			st.setInt(1, idEmpleado);
-
-			resultSet = st.executeQuery();
-
-			if (resultSet.next()) {
-				empleado.setId(resultSet.getInt("id"));
-				empleado.setDni(resultSet.getString("dni"));
-				empleado.setNombre(resultSet.getString("nombre"));
-				empleado.setSexo(resultSet.getString("sexo"));
-				empleado.setCategoria(resultSet.getInt("categoria"));
-				empleado.setAnyos(resultSet.getInt("anyos"));
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return empleado;
-	}
-
+	 /**
+     * Obtains a database connection from the connection pool.
+     *
+     * @return A database connection.
+     * @throws SQLException If there is an error obtaining the connection.
+     */
 	// obtener conexion desde el pool (asumiendo que tienes un método para obtener
 	// la conexión)
 	private Connection obtenerConexion() throws SQLException {

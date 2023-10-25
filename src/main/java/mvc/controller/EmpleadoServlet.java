@@ -24,17 +24,20 @@ public class EmpleadoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
+    * Default constructor.
+    */
 	public EmpleadoServlet() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
+     * Handles HTTP GET requests.
+     * 
+     * @param request  The HTTP request object.
+     * @param response The HTTP response object.
+     * @throws ServletException If there is an error with the servlet.
+     * @throws IOException      If there is an input/output error.
+     */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String opcion = request.getParameter("opcion");
@@ -52,7 +55,7 @@ public class EmpleadoServlet extends HttpServlet {
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/listar.jsp");
 			requestDispatcher.forward(request, response);
 		}
-		// cuando clique en esta opción sólo me llevará a su JSP
+		// cuando clicke en esta opción sólo me llevará a su JSP
 		if (opcion.equals("buscarEmpPorDni")) {
 			System.out.println("Usted a presionado la opcion Buscar por DNI");
 
@@ -70,14 +73,20 @@ public class EmpleadoServlet extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+     * Handles HTTP POST requests.
+     * 
+     * @param request  The HTTP request object.
+     * @param response The HTTP response object.
+     * @throws ServletException If there is an error with the servlet.
+     * @throws IOException      If there is an input/output error.
+     */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //		doGet(request, response);
 		String opcion = request.getParameter("opcion");
-
+		//cuando el form envia los datos desde el JSP entra por aquí
 	    if (opcion.equals("buscarEmpPorDni")) {
 	    	System.out.println("Usted a presionado la opcion buscar por DNI_POST");
+	    	//recojo el dato metido por el input del JSP
 	        String dni = request.getParameter("dni");
 	        
 	        EmpleadoDAO empleadoDAO = new EmpleadoDAO();
