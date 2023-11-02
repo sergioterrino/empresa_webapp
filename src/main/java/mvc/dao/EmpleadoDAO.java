@@ -17,7 +17,6 @@ import mvc.model.repository.Conexion;
 public class EmpleadoDAO {
 	private Connection conn;
 	private PreparedStatement st;
-	private boolean estadoOperacion;
 	//el DAO es el que tiene los metodos que acceden a la BD. El Servlet creo que es el que conecta el cliente con la BD
 	
 	/**
@@ -116,6 +115,37 @@ public class EmpleadoDAO {
 	
 	
 	 //METODOS BUSCAR: CHOICE--------------------------------------------------------------------------------------------------------------------------------
+	
+	
+	public List<Empleado> buscarEmpPorCriterio(String choice, String busqueda) throws SQLException {
+		ResultSet rs = null;
+		List<Empleado> listaEmpleados = new ArrayList<>();
+		conn = obtenerConexion();
+
+		try {
+			PreparedStatement st = conn.prepareStatement("SELECT * FROM EMPLEADOS WHERE " + choice + " = ?");
+			st.setString(1, busqueda);
+			rs = st.executeQuery();
+
+			while (rs.next()) {
+				Empleado empleado = new Empleado();
+				empleado.setId(rs.getInt("id"));
+				empleado.setDni(rs.getString("dni"));
+				empleado.setNombre(rs.getString("nombre"));
+				empleado.setSexo(rs.getString("sexo"));
+				empleado.setCategoria(rs.getInt("categoria"));
+				empleado.setAnyos(rs.getInt("anyos"));
+				listaEmpleados.add(empleado);
+			}
+			System.out.println("hola");
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error, no se ha podido obtener la lista Empleados con CHOICE ANYOS ");
+		}
+		return listaEmpleados;
+	}
+	
 	
 	/**
 	 * Retrieves a list of employees based on their DNI (Identification Number) matching a given value.

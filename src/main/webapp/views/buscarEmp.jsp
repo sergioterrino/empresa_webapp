@@ -19,7 +19,7 @@
 					<option value="DNI">DNI</option>
 					<option value="Nombre">Nombre</option>
 					<option value="Sexo">Sexo</option>
-					<option value="Categoría">Categoría</option>
+					<option value="Categoria">Categoría</option>
 					<option value="Anyos">Anyos</option>
 				</select>
 			</div>

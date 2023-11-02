@@ -127,19 +127,20 @@ public class EmpleadoServlet extends HttpServlet {
 	        try {
 	            if (choice != null) {
 	                if(choice.equals("DNI")) {
-	                	List<Empleado> lista = empleadoDAO.buscarChoiceDni(busqueda);
+	                	List<Empleado> lista = empleadoDAO.buscarEmpPorCriterio(choice, busqueda);
 	    				request.setAttribute("lista", lista);
 	                }else if(choice.equals("Nombre")) {
-	                	List<Empleado> lista = empleadoDAO.buscarChoiceNombre(busqueda);
+	                	List<Empleado> lista = empleadoDAO.buscarEmpPorCriterio(choice, busqueda);
 	    				request.setAttribute("lista", lista);
 	                }else if(choice.equals("Sexo")) {
-	                	List<Empleado> lista = empleadoDAO.buscarChoiceSexo(busqueda);
+	                	List<Empleado> lista = empleadoDAO.buscarEmpPorCriterio(choice, busqueda);
+	                	System.out.println("holaSErvletSEXO");
 	    				request.setAttribute("lista", lista);
 	                }else if(choice.equals("Categoria")) {
-	                	List<Empleado> lista = empleadoDAO.buscarChoiceCategoria(busqueda);
+	                	List<Empleado> lista = empleadoDAO.buscarEmpPorCriterio(choice, busqueda);
 	    				request.setAttribute("lista", lista);
 	                }else if(choice.equals("Anyos")) {
-	                	List<Empleado> lista = empleadoDAO.buscarChoiceAnyos(busqueda);
+	                	List<Empleado> lista = empleadoDAO.buscarEmpPorCriterio(choice, busqueda);
 	    				request.setAttribute("lista", lista);
 	                }
 	                
