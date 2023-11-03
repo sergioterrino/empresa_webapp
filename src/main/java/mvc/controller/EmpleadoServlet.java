@@ -12,9 +12,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 import mvc.dao.EmpleadoDAO;
 import mvc.model.entity.Empleado;
 import mvc.model.entity.Nomina;
+
+
 
 /**
  * Servlet implementation class EmpleadoServlet
@@ -22,6 +28,8 @@ import mvc.model.entity.Nomina;
 @WebServlet(description = "Administra peticiones para la tabla empleados", urlPatterns = { "/empleados" })
 public class EmpleadoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final Logger log = LoggerFactory.getLogger(EmpleadoServlet.class);
+
 
 	/**
     * Default constructor.
@@ -49,7 +57,7 @@ public class EmpleadoServlet extends HttpServlet {
 				List<Empleado> lista = empleadoDAO.obtenerEmpleados();
 				request.setAttribute("lista", lista);
 			} catch (SQLException e) {
-				e.printStackTrace();
+				log.error("No se ha podido mostrar ", e);
 			}
 
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/listar.jsp");
@@ -108,12 +116,14 @@ public class EmpleadoServlet extends HttpServlet {
 	                    requestDispatcher.forward(request, response);
 	                } else {
 	                    System.out.println("No existe un empleado con ese DNI");
+	                    log.error("No existe un empleado con ese DNI");
 	                }
 	            } else {
 	                System.out.println("Error, introduzca un DNI válido.");
+	                log.error("Error, introduzca un DNI válido.");
 	            }
 	        } catch (Exception e) {
-	            e.printStackTrace();
+	        	log.error("Ha habido un error al buscar el Empleado por DNI", e);
 	        }
 	    }
 	    if (opcion.equals("buscarEmp")) {
@@ -134,7 +144,6 @@ public class EmpleadoServlet extends HttpServlet {
 	    				request.setAttribute("lista", lista);
 	                }else if(choice.equals("Sexo")) {
 	                	List<Empleado> lista = empleadoDAO.buscarEmpPorCriterio(choice, busqueda);
-	                	System.out.println("holaSErvletSEXO");
 	    				request.setAttribute("lista", lista);
 	                }else if(choice.equals("Categoria")) {
 	                	List<Empleado> lista = empleadoDAO.buscarEmpPorCriterio(choice, busqueda);
@@ -150,9 +159,11 @@ public class EmpleadoServlet extends HttpServlet {
                     
 	            }else {
 	                System.out.println("Error, seleccione una opción.");
+	                log.error("Error, seleccione una opción.");
 	            }
 	        } catch (Exception e) {
 	            e.printStackTrace();
+	            log.error("Error, al buscar un empleado por criterio.");
 	        }
 	    }
 

@@ -7,6 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import mvc.controller.EmpleadoServlet;
 import mvc.model.entity.Empleado;
 import mvc.model.repository.Conexion;
 
@@ -15,6 +19,7 @@ import mvc.model.repository.Conexion;
  * It provides methods to retrieve, search, and manipulate employee information in the database.
  */
 public class EmpleadoDAO {
+	private static final Logger log = LoggerFactory.getLogger(EmpleadoServlet.class);
 	private Connection conn;
 	private PreparedStatement st;
 	//el DAO es el que tiene los metodos que acceden a la BD. El Servlet creo que es el que conecta el cliente con la BD
@@ -48,6 +53,7 @@ public class EmpleadoDAO {
 			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			log.error("No se ha podido obtener la lista Empleados", e);
 			System.out.println("Error, no se ha podido obtener la lista Empleados ");
 		}
 		return listaEmpleados;
@@ -81,7 +87,8 @@ public class EmpleadoDAO {
 			Double salario = obtenerSalario(dni);
 
 			conn.close();
-		} catch (SQLException e1) {
+		} catch (SQLException e) {
+			log.error("No se ha podido encontrar un empleado con ese DNI", e);
 			System.out.println("Error, no se ha podido encontrar un empleado con ese DNI.");
 		}
 		return empleado;
@@ -107,7 +114,8 @@ public class EmpleadoDAO {
 				salario = rs.getDouble("SUELDO");
 			}
 			conn.close();
-		} catch (SQLException e1) {
+		} catch (SQLException e) {
+			log.error("No se ha podido obtener el salario del empleado", e);
 			System.out.println("Error, no se ha podido obtener el salario del empleado");
 		}
 		return salario;
@@ -115,7 +123,6 @@ public class EmpleadoDAO {
 	
 	
 	 //METODOS BUSCAR: CHOICE--------------------------------------------------------------------------------------------------------------------------------
-	
 	
 	public List<Empleado> buscarEmpPorCriterio(String choice, String busqueda) throws SQLException {
 		ResultSet rs = null;
@@ -141,187 +148,12 @@ public class EmpleadoDAO {
 			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			log.error("No se ha podido obtener la lista Empleados con CHOICE ANYOS", e);
 			System.out.println("Error, no se ha podido obtener la lista Empleados con CHOICE ANYOS ");
 		}
 		return listaEmpleados;
 	}
 	
-	
-	/**
-	 * Retrieves a list of employees based on their DNI (Identification Number) matching a given value.
-	 *
-	 * @param dni The DNI value to search for in the employees' records.
-	 * @return A list of Employee objects matching the DNI value.
-	 * @throws SQLException If there is an error with the database.
-	 */
-	public List<Empleado> buscarChoiceDni(String dni) throws SQLException {
-		ResultSet rs = null;
-		List<Empleado> listaEmpleados = new ArrayList<>();
-		String sql = null;
-		conn = obtenerConexion();
-
-		try {
-			PreparedStatement st = conn.prepareStatement("SELECT * FROM EMPLEADOS WHERE DNI = ?");
-			st.setString(1, dni);
-			rs = st.executeQuery();
-
-			while (rs.next()) {
-				Empleado empleado = new Empleado();
-				empleado.setId(rs.getInt("id"));
-				empleado.setDni(rs.getString("dni"));
-				empleado.setNombre(rs.getString("nombre"));
-				empleado.setSexo(rs.getString("sexo"));
-				empleado.setCategoria(rs.getInt("categoria"));
-				empleado.setAnyos(rs.getInt("anyos"));
-				listaEmpleados.add(empleado);
-			}
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("Error, no se ha podido obtener la lista Empleados con CHOICE DNI ");
-		}
-		return listaEmpleados;
-	}
-	
-	/**
-	 * Retrieves a list of employees based on their name matching a given value.
-	 *
-	 * @param nombre The name value to search for in the employees' records.
-	 * @return A list of Employee objects matching the name value.
-	 * @throws SQLException If there is an error with the database.
-	 */
-	public List<Empleado> buscarChoiceNombre(String nombre) throws SQLException {
-		ResultSet rs = null;
-		List<Empleado> listaEmpleados = new ArrayList<>();
-		conn = obtenerConexion();
-
-		try {
-			PreparedStatement st = conn.prepareStatement("SELECT * FROM EMPLEADOS WHERE nombre = ?");
-			st.setString(1, nombre);
-			rs = st.executeQuery();
-
-			while (rs.next()) {
-				Empleado empleado = new Empleado();
-				empleado.setId(rs.getInt("id"));
-				empleado.setDni(rs.getString("dni"));
-				empleado.setNombre(rs.getString("nombre"));
-				empleado.setSexo(rs.getString("sexo"));
-				empleado.setCategoria(rs.getInt("categoria"));
-				empleado.setAnyos(rs.getInt("anyos"));
-				listaEmpleados.add(empleado);
-			}
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("Error, no se ha podido obtener la lista Empleados con CHOICE NOMBRE ");
-		}
-		return listaEmpleados;
-	}
-
-	/**
-	 * Retrieves a list of employees based on their gender (sexo) matching a given value.
-	 *
-	 * @param sexo The gender value to search for in the employees' records.
-	 * @return A list of Employee objects matching the gender value.
-	 * @throws SQLException If there is an error with the database.
-	 */
-	public List<Empleado> buscarChoiceSexo(String sexo) throws SQLException {
-		ResultSet rs = null;
-		List<Empleado> listaEmpleados = new ArrayList<>();
-		conn = obtenerConexion();
-
-		try {
-			PreparedStatement st = conn.prepareStatement("SELECT * FROM EMPLEADOS WHERE sexo = ?");
-			st.setString(1, sexo);
-			rs = st.executeQuery();
-
-			while (rs.next()) {
-				Empleado empleado = new Empleado();
-				empleado.setId(rs.getInt("id"));
-				empleado.setDni(rs.getString("dni"));
-				empleado.setNombre(rs.getString("nombre"));
-				empleado.setSexo(rs.getString("sexo"));
-				empleado.setCategoria(rs.getInt("categoria"));
-				empleado.setAnyos(rs.getInt("anyos"));
-				listaEmpleados.add(empleado);
-			}
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("Error, no se ha podido obtener la lista Empleados con CHOICE SEXO ");
-		}
-		return listaEmpleados;
-	}
-	
-	/**
-	 * Retrieves a list of employees based on their category (categoria) matching a given value.
-	 *
-	 * @param categoria The category value to search for in the employees' records.
-	 * @return A list of Employee objects matching the category value.
-	 * @throws SQLException If there is an error with the database.
-	 */
-	public List<Empleado> buscarChoiceCategoria(String categoria) throws SQLException {
-		ResultSet rs = null;
-		List<Empleado> listaEmpleados = new ArrayList<>();
-		conn = obtenerConexion();
-
-		try {
-			PreparedStatement st = conn.prepareStatement("SELECT * FROM EMPLEADOS WHERE categoria = ?");
-			st.setString(1, categoria);
-			rs = st.executeQuery();
-
-			while (rs.next()) {
-				Empleado empleado = new Empleado();
-				empleado.setId(rs.getInt("id"));
-				empleado.setDni(rs.getString("dni"));
-				empleado.setNombre(rs.getString("nombre"));
-				empleado.setSexo(rs.getString("sexo"));
-				empleado.setCategoria(rs.getInt("categoria"));
-				empleado.setAnyos(rs.getInt("anyos"));
-				listaEmpleados.add(empleado);
-			}
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("Error, no se ha podido obtener la lista Empleados con CHOICE CATEGORIA ");
-		}
-		return listaEmpleados;
-	}
-	
-	/**
-	 * Retrieves a list of employees based on the number of years (anyos) matching a given value.
-	 *
-	 * @param anyos The number of years value to search for in the employees' records.
-	 * @return A list of Employee objects matching the number of years value.
-	 * @throws SQLException If there is an error with the database.
-	 */
-	public List<Empleado> buscarChoiceAnyos(String anyos) throws SQLException {
-		ResultSet rs = null;
-		List<Empleado> listaEmpleados = new ArrayList<>();
-		conn = obtenerConexion();
-
-		try {
-			PreparedStatement st = conn.prepareStatement("SELECT * FROM EMPLEADOS WHERE anyos = ?");
-			st.setString(1, anyos);
-			rs = st.executeQuery();
-
-			while (rs.next()) {
-				Empleado empleado = new Empleado();
-				empleado.setId(rs.getInt("id"));
-				empleado.setDni(rs.getString("dni"));
-				empleado.setNombre(rs.getString("nombre"));
-				empleado.setSexo(rs.getString("sexo"));
-				empleado.setCategoria(rs.getInt("categoria"));
-				empleado.setAnyos(rs.getInt("anyos"));
-				listaEmpleados.add(empleado);
-			}
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("Error, no se ha podido obtener la lista Empleados con CHOICE ANYOS ");
-		}
-		return listaEmpleados;
-	}
 	
 	//FIN METODOS BUSCAR: CHOICE------------------------------------------------------------------------------------------------------------------------------------
 
