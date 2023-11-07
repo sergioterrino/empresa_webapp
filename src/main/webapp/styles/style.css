@@ -92,3 +92,8 @@ input[type="submit"] {
 	padding: 10px 20px;
 	cursor: pointer;
 }
+
+#imagePuig{
+	width: 35%;
+	height: 35%;
+}

@@ -1,0 +1,34 @@
+<configuration>
+
+	<!-- VARIABLES -->
+	<timestamp key="date" datePattern="dd-MM-yyyy" />
+
+	<!-- LOGGER ROOT -->
+	<root level="debug" >
+		<appender-ref ref="FileLogAPP" />	
+		<appender-ref ref="consAp" />		
+	</root> 
+	
+	<!-- FILEAPPENDER APP -->
+	<appender name="FileLogAPP"	class="ch.qos.logback.core.FileAppender">
+		
+		<!-- RUTA Y NOMBRE DEL FICHERO -->
+		<file>C:\Users\sergio\Documents\2DAW\DWES\WebApp_empresa\empresa\src\main\resources\logs\logGestionNomina-${date}.log</file>
+		
+		<append>true</append>
+		<immediateFlush>true</immediateFlush>
+		
+		<!-- FORMATO SALIDA -->
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - [%method] - %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="consAp"	class="ch.qos.logback.core.ConsoleAppender">
+
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-4level %logger{32} - [%method] - %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+</configuration>

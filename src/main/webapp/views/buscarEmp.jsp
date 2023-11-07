@@ -14,8 +14,8 @@
 		<% /* Este form enviará los datos de vuelta al Servlet (los datos que se mandan son: name="choice", los values, etc) */ %>
 		<form action="empleados?opcion=buscarEmp" method="post">
 			<div id="divBuscarEmp">
-				<label for="empleados">Por qué campo quieres buscar:</label> <select
-					id="empleados" name="choice">
+				<label for="empleados">Por qué campo quieres buscar:</label> 
+				<select id="empleados" name="choice">
 					<option value="DNI">DNI</option>
 					<option value="Nombre">Nombre</option>
 					<option value="Sexo">Sexo</option>
