@@ -1,8 +1,8 @@
 package mvc.controller;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -73,6 +73,13 @@ public class EmpleadoServlet extends HttpServlet {
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/buscarEmp.jsp");
 			requestDispatcher.forward(request, response);
 		}
+		//Para que me lleve a la pagina editar.jsp sin datos
+		if(opcion.equals("editar")) {
+			Empleado emp = new Empleado();
+			//Redirigir a verEmpleado.jsp
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/editar.jsp");
+			requestDispatcher.forward(request, response);
+		}
 
 	}
 
@@ -89,6 +96,7 @@ public class EmpleadoServlet extends HttpServlet {
 //		doGet(request, response);
 		String opcion = request.getParameter("opcion");
 		// cuando el form envia los datos desde el JSP entra por aquí
+		
 		if (opcion.equals("buscarEmpPorDni")) {
 			System.out.println("Usted a presionado la opcion buscar por DNI_POST");
 			// recojo el dato metido por el input del JSP
@@ -174,6 +182,17 @@ public class EmpleadoServlet extends HttpServlet {
 				e.printStackTrace();
 				log.error("Error, al buscar un empleado por criterio.");
 			}
+		}if(opcion.equals("editar")) {
+			Empleado emp = new Empleado();
+			//traigo del verEmpleado.jsp el id que lo paso por la url
+			int id = Integer.parseInt(request.getParameter("id"));
+			
+			
+			
+			
+			// Redirigir a verEmpleado.jsp
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/editar.jsp");
+			requestDispatcher.forward(request, response);
 		}
 
 	}

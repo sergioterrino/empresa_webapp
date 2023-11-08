@@ -154,9 +154,34 @@ public class EmpleadoDAO {
 		return listaEmpleados;
 	}
 	
+	public Empleado obtenerEmpPorId(int id) {
+		
+		return null;
+	}
 	
-	//FIN METODOS BUSCAR: CHOICE------------------------------------------------------------------------------------------------------------------------------------
 
+	public Empleado editar(Empleado empleado) throws SQLException{
+		Empleado emp = new Empleado();
+		conn = obtenerConexion();
+		try {
+			PreparedStatement st = conn.prepareStatement("SELECT * FROM EMPLEADOS WHERE DNI = ?");
+			
+			ResultSet rs = st.executeQuery();
+			
+			while(rs.next()) {
+				
+			}
+			
+		}catch(SQLException e) {
+			log.error("No se ha podido mostrar los datos del empleados", e);
+		}
+		return emp;
+	}
+	
+	
+	
+	
+	
 	 /**
      * Obtains a database connection from the connection pool.
      *

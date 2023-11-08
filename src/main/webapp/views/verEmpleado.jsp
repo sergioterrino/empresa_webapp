@@ -28,9 +28,12 @@
 					<td><c:out value="${empleado.sexo}"></c:out></td>
 					<td><c:out value="${empleado.categoria}"></c:out></td>
 					<td><c:out value="${empleado.anyos}"></c:out></td>
-					<td><a <% /* Aún no está implementado */ %>
-						href="empleados?opcion=eliminar&id=<c:out value="${empleado.id}"></c:out>">Modificar</a>
+					<td>
+						<form action="empleados?opcion=editar" method="post" >
+							<input type="hidden" name="dni" value="${empleado.dni}">
+						</form>
 					</td>
+					<!-- <td><a href="empleados?opcion=editar&id=<c:out value="${empleado.id}"></c:out>">Modificar</a></td> -->
 				</tr>
 			</c:forEach>
 		</table>
