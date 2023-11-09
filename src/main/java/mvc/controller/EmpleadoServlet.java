@@ -26,7 +26,7 @@ import mvc.model.entity.Nomina;
 public class EmpleadoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = LoggerFactory.getLogger(EmpleadoServlet.class);
-
+	String dniAEditar = "";
 	/**
 	 * Default constructor.
 	 */
@@ -172,10 +172,6 @@ public class EmpleadoServlet extends HttpServlet {
 					//le digo que me vuelva a cargar la jsp con la (lista)
 					RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/buscarEmp.jsp");
 					requestDispatcher.forward(request, response);
-					
-					// Redirigir a verEmpleado.jsp
-//					RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/verEmpleado.jsp");
-//					requestDispatcher.forward(request, response);
 
 				} else {
 					System.out.println("Error, seleccione una opción.");
@@ -187,15 +183,12 @@ public class EmpleadoServlet extends HttpServlet {
 			}
 		}if(opcion.equals("editar")) {
 			EmpleadoDAO empleadoDAO = new EmpleadoDAO();
-			//traigo del verEmpleado.jsp el id que lo paso por la url
-//			int id = Integer.parseInt(request.getParameter("id"));
 			
-			//me traigo los parametros del form de buscarEmp.jsp. En eeste caso
-			String dni = request.getParameter("dni");
+			//me traigo los parametros del form de buscarEmp.jsp. En este caso DNI
+			dniAEditar = request.getParameter("dni");
 			
 			try {
-				Empleado empleado = empleadoDAO.obtenerEmpleadoPorDni(dni);
-				System.out.println("editarrrrrrrrrrrrrrrr");
+				Empleado empleado = empleadoDAO.obtenerEmpleadoPorDni(dniAEditar);
 				request.setAttribute("empleado", empleado);
 				
 			}catch (Exception e) {
@@ -209,21 +202,20 @@ public class EmpleadoServlet extends HttpServlet {
 		if(opcion.equals("guardar")) {
 			EmpleadoDAO empleadoDAO = new EmpleadoDAO();
 			
-			//me traigo el DNI del form de editar.jsp.
-			String dni = request.getParameter("dni");
-			
 			try {
+				Empleado emp = empleadoDAO.obtenerEmpleadoPorDni(dniAEditar); //esto es para obtner el id
+				int id = emp.getId();
+				
 				Empleado empleado = new Empleado();
+				empleado.setId(id);
 				empleado.setDni(request.getParameter("dni"));
 				empleado.setNombre(request.getParameter("nombre"));
 				empleado.setSexo(request.getParameter("sexo"));
 				empleado.setCategoria(Integer.parseInt(request.getParameter("categoria")));
 				empleado.setAnyos(Integer.parseInt(request.getParameter("anyos")));
-				
-				empleadoDAO.guardarEmp(empleado, dni);
-				System.out.println("guardaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaar");
-				System.out.println("empleado" + empleado);
-				System.out.println("dni" + dni);
+
+				empleadoDAO.guardarEmp(empleado);
+				log.info("Empleado modificado con éxito!! :)");
 				//request.setAttribute("empleado", empleadoModificado);
 				
 			}catch (Exception e) {

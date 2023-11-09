@@ -12,7 +12,7 @@
 <body>
 	<div class="container">
 		<h1>Editar Empleado</h1>
-
+		<form action="empleados?opcion=guardar" method="post">
 			<!-- Reemplaza guardarCambios.jsp con tu página de guardado -->
 			<table border="1">
 				<tr>
@@ -21,26 +21,32 @@
 					<th>Sexo</th>
 					<th>Categoría</th>
 					<th>Años</th>
+					<th>Acción</th>
 				</tr>
 				<tr>
-					<td><input value="${empleado.dni}" /></td>
-					<td><input value="${empleado.nombre}" /></td>
-					<td><input value="${empleado.sexo}" /></td>
-					<td><input value="${empleado.categoria}" /></td>
-					<td><input value="${empleado.anyos}" /></td>
-					
+					<td><input name="dni" value="${empleado.dni}" /></td>
+					<td><input name="nombre" value="${empleado.nombre}" /></td>
+					<td><input name="sexo" value="${empleado.sexo}" /></td>
+					<td><input name="categoria" value="${empleado.categoria}" /></td>
+					<td><input name="anyos" value="${empleado.anyos}" /></td>
+					<td><input type="submit" value="Guardar"></td>
+					<td><input type="hidden" name="id" value="${empleado.id}"/></td>
 				</tr>
 			</table>
-
-		<form action="empleados?opcion=guardar" method="post">
-			<input type="hidden" name="dni" value="${empleado.dni}"/>
-			<input type="hidden" name="nombre" value="${empleado.nombre}" />
-			<input type="hidden" name="sexo" value="${empleado.sexo}" />
-			<input type="hidden" name="categoria" value="${empleado.categoria}" />
-			<input type="hidden" name="anyos" value="${empleado.anyos}" />
-			<input id="btnVolver" type="submit" value="Guardar Cambios">
-			
 		</form>
+		<%
+		/*
+			<form action="empleados?opcion=guardar" method="post">
+				<input type="hidden" name="dni" value="${empleado.dni}"/>
+				<input type="hidden" name="nombre" value="${empleado.nombre}" />
+				<input type="hidden" name="sexo" value="${empleado.sexo}" />
+				<input type="hidden" name="categoria" value="${empleado.categoria}" />
+				<input type="hidden" name="anyos" value="${empleado.anyos}" />
+				<input id="btnVolver" type="submit" value="Guardar Cambios">
+				
+			</form>
+			*/
+		%>
 		<button onclick="history.back()" id="btnVolver"
 			style="position: absolute; top: 3%; left: 1%; background-color: #3498db; color: white; font-weight: bold; border: 1px solid white; border-radius: 5px; padding: 0.5%;">
 			<i class="fas fa-reply"></i> Volver

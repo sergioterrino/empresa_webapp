@@ -6,7 +6,7 @@ body {
 }
 
 .container {
-	margin: 2% 10%;
+	margin: 2% 15%;
 	padding: 3%;
 	background-color: #f0f0f0;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -69,14 +69,6 @@ table tr:nth-child(even) {
 #divBuscarEmp {
 	margin: 2% 0%;
 }
-#divBuscarEmp:nth-child(2){
-	display: inline;
-}
-#divBuscarEmp:nth-child(3){
-	display: inline;
-	width: 30%;
-	margin-left: 1%;
-}
 
 #divVerSalario {
 	margin: 2% 0%;
@@ -99,16 +91,4 @@ input[type="submit"] {
 	border-radius: 5px;
 	padding: 10px 20px;
 	cursor: pointer;
-}
-
-#imagePuig{
-	width: 35%;
-	height: 35%;
-}
-.containerVerEmp{
-	margin: 2% 0%;
-	padding: 3%;
-	background-color: #f0f0f0;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-	position: relative;
 }

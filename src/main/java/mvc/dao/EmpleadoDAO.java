@@ -77,6 +77,7 @@ public class EmpleadoDAO {
 			rs = st.executeQuery();
 
 			if (rs.next()) {
+				empleado.setId(rs.getInt("id"));
 				empleado.setDni(rs.getString("dni"));
 				empleado.setNombre(rs.getString("nombre"));
 				empleado.setSexo(rs.getString("sexo"));
@@ -154,25 +155,23 @@ public class EmpleadoDAO {
 	}
 
 
-	public void guardarEmp(Empleado empleado, String dni) throws SQLException{
+	public void guardarEmp(Empleado empleado) throws SQLException{
 		conn = obtenerConexion();
 		try {
 			PreparedStatement st = conn.prepareStatement("UPDATE EMPLEADOS SET DNI = ?, NOMBRE = ?, SEXO = ?, CATEGORIA = ?, ANYOS = ? WHERE ID = ?");
 			//
-			st.setInt(6, empleado.getId());
 			st.setString(1, empleado.getDni());
-			System.out.println("dniDAO" + empleado.getDni());
 			st.setString(2, empleado.getNombre());
 			st.setString(3, empleado.getSexo());
 			st.setInt(4, empleado.getCategoria());
 			st.setInt(5, empleado.getAnyos());
-//			st.setString(6, dni);
+			st.setInt(6, empleado.getId());
 			
 			st.executeUpdate();
+			
 			conn.commit();
 			st.close();
 			conn.close();
-			System.out.println("modificado con exito");
 			
 		}catch(SQLException e) {
 			log.error("No se ha podido guardar los datos del empleados", e);
