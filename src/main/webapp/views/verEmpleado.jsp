@@ -12,36 +12,78 @@
 <body>
 	<div class="container" style="position: relative;">
 		<h1>Lista de Empleados</h1>
-		<table border="1">
-			<tr>
-				<th>DNI</th>
-				<th>Nombre</th>
-				<th>Sexo</th>
-				<th>Categoría</th>
-				<th>Años</th>
-				<th>Acción</th>
-			</tr>
-			<c:forEach var="empleado" items="${lista}">
+		<form action="empleados?opcion=editar" method="post">
+			<table border="1">
 				<tr>
-					<td><c:out value="${empleado.dni}"></c:out></td>
-					<td><c:out value="${empleado.nombre}"></c:out></td>
-					<td><c:out value="${empleado.sexo}"></c:out></td>
-					<td><c:out value="${empleado.categoria}"></c:out></td>
-					<td><c:out value="${empleado.anyos}"></c:out></td>
-					<td>
-						<form action="empleados?opcion=editar" method="post" >
-							<input type="hidden" name="dni" value="${empleado.dni}">
-						</form>
-					</td>
-					<!-- <td><a href="empleados?opcion=editar&id=<c:out value="${empleado.id}"></c:out>">Modificar</a></td> -->
+					<th>DNI</th>
+					<th>Nombre</th>
+					<th>Sexo</th>
+					<th>Categoría</th>
+					<th>Años</th>
+					<th>Acción</th>
 				</tr>
-			</c:forEach>
-		</table>
+				<c:forEach var="empleado" items="${lista}">
+					<tr>
+						<td><c:out value="${empleado.dni}"></c:out></td>
+						<td><c:out value="${empleado.nombre}"></c:out></td>
+						<td><c:out value="${empleado.sexo}"></c:out></td>
+						<td><c:out value="${empleado.categoria}"></c:out></td>
+						<td><c:out value="${empleado.anyos}"></c:out></td>
+						<td id="pepe">
+							<form action="empleados?opcion=editar" method="post">
+								<input type="hidden" name="dni" value="${empleado.dni}"/>
+								<input  name="dni" value="${empleado.dni}"/>
+							</form>
+						</td>
+						
+					</tr>
+				</c:forEach>
+			</table>
+		</form>
 		<button onclick="history.back()" id="btnVolver"
-			style="position: absolute; top: 3%; left: 1%; background-color: #3498db; color: white; font-weight: bold; border: 1px solid white; border-radius: 5px;padding:0.5%;">
+			style="position: absolute; top: 3%; left: 1%; background-color: #3498db; color: white; font-weight: bold; border: 1px solid white; border-radius: 5px; padding: 0.5%;">
 			<i class="fas fa-reply"></i> Volver
 		</button>
 	</div>
 
 </body>
 </html>
+<%
+/*
+<body>
+<div class="container" style="position: relative;">
+	<h1>Lista de Empleados</h1>
+	<table border="1">
+		<tr>
+	<th>DNI</th>
+	<th>Nombre</th>
+	<th>Sexo</th>
+	<th>Categoría</th>
+	<th>Años</th>
+	<th>Acción</th>
+		</tr>
+		<c:forEach var="empleado" items="${lista}">
+	<tr>
+		<td><c:out value="${empleado.dni}"></c:out></td>
+		<td><c:out value="${empleado.nombre}"></c:out></td>
+		<td><c:out value="${empleado.sexo}"></c:out></td>
+		<td><c:out value="${empleado.categoria}"></c:out></td>
+		<td><c:out value="${empleado.anyos}"></c:out></td>
+		<td>
+	<form action="empleados?opcion=editar" method="post" >
+		<input type="hidden" name="dni" value="${empleado.dni}">
+	</form>
+		</td>
+		<!-- <td><a href="empleados?opcion=editar&id=<c:out value="${empleado.id}"></c:out>">Modificar</a></td> -->
+	</tr>
+		</c:forEach>
+	</table>
+	<button onclick="history.back()" id="btnVolver"
+		style="position: absolute; top: 3%; left: 1%; background-color: #3498db; color: white; font-weight: bold; border: 1px solid white; border-radius: 5px;padding:0.5%;">
+		<i class="fas fa-reply"></i> Volver
+	</button>
+</div>
+
+</body>
+*/
+%>

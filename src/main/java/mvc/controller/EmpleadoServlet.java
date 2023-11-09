@@ -75,7 +75,6 @@ public class EmpleadoServlet extends HttpServlet {
 		}
 		//Para que me lleve a la pagina editar.jsp sin datos
 		if(opcion.equals("editar")) {
-			Empleado emp = new Empleado();
 			//Redirigir a verEmpleado.jsp
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/editar.jsp");
 			requestDispatcher.forward(request, response);
@@ -169,10 +168,14 @@ public class EmpleadoServlet extends HttpServlet {
 						List<Empleado> lista = empleadoDAO.buscarEmpPorCriterio(choice, busqueda);
 						request.setAttribute("lista", lista);
 					}
-
-					// Redirigir a verEmpleado.jsp
-					RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/verEmpleado.jsp");
+					
+					//le digo que me vuelva a cargar la jsp con la (lista)
+					RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/buscarEmp.jsp");
 					requestDispatcher.forward(request, response);
+					
+					// Redirigir a verEmpleado.jsp
+//					RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/verEmpleado.jsp");
+//					requestDispatcher.forward(request, response);
 
 				} else {
 					System.out.println("Error, seleccione una opción.");
@@ -183,15 +186,52 @@ public class EmpleadoServlet extends HttpServlet {
 				log.error("Error, al buscar un empleado por criterio.");
 			}
 		}if(opcion.equals("editar")) {
-			Empleado emp = new Empleado();
+			EmpleadoDAO empleadoDAO = new EmpleadoDAO();
 			//traigo del verEmpleado.jsp el id que lo paso por la url
-			int id = Integer.parseInt(request.getParameter("id"));
+//			int id = Integer.parseInt(request.getParameter("id"));
 			
+			//me traigo los parametros del form de buscarEmp.jsp. En eeste caso
+			String dni = request.getParameter("dni");
 			
+			try {
+				Empleado empleado = empleadoDAO.obtenerEmpleadoPorDni(dni);
+				System.out.println("editarrrrrrrrrrrrrrrr");
+				request.setAttribute("empleado", empleado);
+				
+			}catch (Exception e) {
+				log.error("Error, al obtener los datos del empleado", e);
+			}
 			
-			
-			// Redirigir a verEmpleado.jsp
+			// Redirigir a editar.jsp
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/editar.jsp");
+			requestDispatcher.forward(request, response);
+		}
+		if(opcion.equals("guardar")) {
+			EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+			
+			//me traigo el DNI del form de editar.jsp.
+			String dni = request.getParameter("dni");
+			
+			try {
+				Empleado empleado = new Empleado();
+				empleado.setDni(request.getParameter("dni"));
+				empleado.setNombre(request.getParameter("nombre"));
+				empleado.setSexo(request.getParameter("sexo"));
+				empleado.setCategoria(Integer.parseInt(request.getParameter("categoria")));
+				empleado.setAnyos(Integer.parseInt(request.getParameter("anyos")));
+				
+				empleadoDAO.guardarEmp(empleado, dni);
+				System.out.println("guardaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaar");
+				System.out.println("empleado" + empleado);
+				System.out.println("dni" + dni);
+				//request.setAttribute("empleado", empleadoModificado);
+				
+			}catch (Exception e) {
+				log.error("Error, al obtener los datos del empleado", e);
+			}
+			
+			// Redirigir a buscarEmp.jsp
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/buscarEmp.jsp");
 			requestDispatcher.forward(request, response);
 		}
 

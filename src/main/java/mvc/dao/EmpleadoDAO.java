@@ -144,7 +144,6 @@ public class EmpleadoDAO {
 				empleado.setAnyos(rs.getInt("anyos"));
 				listaEmpleados.add(empleado);
 			}
-			System.out.println("hola");
 			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -153,33 +152,32 @@ public class EmpleadoDAO {
 		}
 		return listaEmpleados;
 	}
-	
-	public Empleado obtenerEmpPorId(int id) {
-		
-		return null;
-	}
-	
 
-	public Empleado editar(Empleado empleado) throws SQLException{
-		Empleado emp = new Empleado();
+
+	public void guardarEmp(Empleado empleado, String dni) throws SQLException{
 		conn = obtenerConexion();
 		try {
-			PreparedStatement st = conn.prepareStatement("SELECT * FROM EMPLEADOS WHERE DNI = ?");
+			PreparedStatement st = conn.prepareStatement("UPDATE EMPLEADOS SET DNI = ?, NOMBRE = ?, SEXO = ?, CATEGORIA = ?, ANYOS = ? WHERE ID = ?");
+			//
+			st.setInt(6, empleado.getId());
+			st.setString(1, empleado.getDni());
+			System.out.println("dniDAO" + empleado.getDni());
+			st.setString(2, empleado.getNombre());
+			st.setString(3, empleado.getSexo());
+			st.setInt(4, empleado.getCategoria());
+			st.setInt(5, empleado.getAnyos());
+//			st.setString(6, dni);
 			
-			ResultSet rs = st.executeQuery();
-			
-			while(rs.next()) {
-				
-			}
+			st.executeUpdate();
+			conn.commit();
+			st.close();
+			conn.close();
+			System.out.println("modificado con exito");
 			
 		}catch(SQLException e) {
-			log.error("No se ha podido mostrar los datos del empleados", e);
+			log.error("No se ha podido guardar los datos del empleados", e);
 		}
-		return emp;
 	}
-	
-	
-	
 	
 	
 	 /**
